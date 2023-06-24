@@ -1,37 +1,25 @@
 import { writeFile, appendFile, mkdir, rm, readFile } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
-import { argv } from 'node:process'
+import { argv } from 'node:process' 
 
 const headers = {
-  accept: '*/*',
-  'accept-encoding': 'gzip, deflate, br',
-  'accept-language': 'en,zh-CN;q=0.9,zh;q=0.8,ja-JP;q=0.7,ja;q=0.6',
-  'cache-control': 'no-cache',
   origin: 'https://www.fc-member.johnnys-net.jp',
-  pragma: 'no-cache',
   referer: 'https://www.fc-member.johnnys-net.jp/',
-  'sec-ch-ua': `"Google Chrome";v="111", "Not(A:Brand";v="8", "Chromium";v="111"`,
-  'sec-ch-ua-mobile': `?0`,
-  'sec-ch-ua-platform': 'Windows',
-  'sec-fetch-dest': `empty`,
-  'sec-fetch-mode': `cors`,
-  'sec-fetch-site': `same-site`,
-  'user-agent': `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36`,
+  'User-Agent':
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
 }
 const options = {
   headers,
   body: null,
   method: 'GET',
 }
+
 async function loadList(url) {
-  const res = await fetch(url, {
-    headers,
-    body: null,
-    method: 'GET',
-  })
+  const res = await fetch(url, options)
   const text = await res.text()
   console.log(text)
 }
+
 const urlPrefix = argv[3]
 const chunk = argv[2]
 const regexp = /([0-9a-z_]+)(.m3u8)?$/
@@ -42,6 +30,7 @@ async function load(i) {
   const url = `${urlPrefix}${index}.ts`
 
   console.log('start fetching ' + index)
+  console.log('url: ' + url)
   const res = await fetch(url, options)
   const size = res.headers.get('content-length')
   console.log('Total size: ' + size)
