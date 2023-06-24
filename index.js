@@ -4,13 +4,19 @@ import { argv } from 'node:process'
 
 const headers = {
   accept: '*/*',
+  'accept-encoding': 'gzip, deflate, br',
   'accept-language': 'en,zh-CN;q=0.9,zh;q=0.8,ja-JP;q=0.7,ja;q=0.6',
   'cache-control': 'no-cache',
+  origin: 'https://www.fc-member.johnnys-net.jp',
   pragma: 'no-cache',
-  Referer: 'https://www.fc-member.johnnys-net.jp/',
-  'Referrer-Policy': 'strict-origin-when-cross-origin',
-  'user-agent':
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
+  referer: 'https://www.fc-member.johnnys-net.jp/',
+  'sec-ch-ua': `"Google Chrome";v="111", "Not(A:Brand";v="8", "Chromium";v="111"`,
+  'sec-ch-ua-mobile': `?0`,
+  'sec-ch-ua-platform': 'Windows',
+  'sec-fetch-dest': `empty`,
+  'sec-fetch-mode': `cors`,
+  'sec-fetch-site': `same-site`,
+  'user-agent': `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36`,
 }
 const options = {
   headers,
@@ -68,7 +74,7 @@ async function load(i) {
 async function download() {
   console.log('start downloading')
   console.log('urlPrefix: ' + urlPrefix)
-  console.log('chunk:'+ chunk)
+  console.log('chunk:' + chunk)
   try {
     await mkdir(`./${fileName}`)
   } catch (err) {
